@@ -39,7 +39,7 @@ class DatabaseEnum(Enum):
     stage_db = ("실천", "addc94642ee74825bd31109f4fd1c9ee", EmojiCode.YELLOW_CIRCLE)
     read_db = ("읽기", "c326f77425a0446a8aa309478767c85b", EmojiCode.YELLOW_HEART)
     tide_db = ("줄기", "e8782fe4e1a34c9d846d57b01a370327", EmojiCode.GREEN_CIRCLE)
-    tap_db = ("꼭지", "52d387ea0aaa470cb69332708c61b34d", EmojiCode.GREEN_HEART)
+    tap_db = ("수집", "52d387ea0aaa470cb69332708c61b34d", EmojiCode.GREEN_HEART)  # TODO scrap
     dateid_db = ("일간", "961d1ca0a3d24a46b838ba85e710f18d", EmojiCode.PURPLE_CIRCLE)
     weekid_db = ("주간", "d020b399cf5947a59d11a0b9e0ea45d0", EmojiCode.PURPLE_HEART)
     genai_db = (
