@@ -13,6 +13,12 @@ Notion 편집을 자동화하세요. 에디터 도구를 이용해 여러분만�
 #### Default
 
 ```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv init
+uv sync
+```
+
+```sh
 pip install hatch
 hatch env create
 ```
@@ -32,4 +38,10 @@ brew install --ignore-dependencies ruff-lsp
 ## Cloc
 # https://github.com/AlDanial/cloc
 brew install cloc
+```
+
+### Test
+
+```sh
+uv run ruff check
 ```

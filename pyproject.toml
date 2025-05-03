@@ -1,6 +1,6 @@
 [project]
 name = "notion_df"
-version = "0.2.0"
+version = "0.3.0"
 description = "Notion-df: schema-rich Notion API wrapper"
 authors = [{ name = "dyhn78", email = "dyhn78@gmail.com" }]
 requires-python = ">=3.12"
@@ -18,7 +18,9 @@ dependencies = [
     "typing_extensions==4.10.0",
     "webdriver-manager==4.0.2",
     "psutil==5.9.6",
-    "loguru==0.7.2"
+    "loguru==0.7.2",
+    "pytest==7.3.1",
+    "ruff>=0.11.4",
 ]
 
 [project.optional-dependencies]
