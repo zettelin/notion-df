@@ -378,21 +378,9 @@ class MatchRecordTimestr(MatchSequentialAction):
     def will_process(self, record: Page) -> bool:
         if not (
             record.parent == self.record_db
-            and not record.properties[record_timestr_prop]
         ):
             return False
-        try:
-            return record.properties["⚙️📆일지"]
-        except KeyError:
-            pass
-        try:
-            record_dateid = record.properties[self.record_to_datei][0]
-        except IndexError:
-            return True
-        record_dateid_date = record_dateid.properties[datei_date_prop]
-        if record_dateid_date is None:
-            return False
-        return record.created_time.date() == record_dateid_date.start
+        return record.properties["⚙️📆일지"]
 
     def process_page(self, record: Page) -> None:
         if not self.will_process(record):
