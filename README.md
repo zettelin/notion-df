@@ -13,8 +13,17 @@ Notion 편집을 자동화하세요. 에디터 도구를 이용해 여러분만�
 #### Default
 
 ```sh
-pip install hatch
+sudo apt install pipx
+pipx ensurepath
+pipx install hatch
 hatch env create
+```
+
+#### Run
+
+```sh
+hatch shell
+hatch run python -m app.routine.main
 ```
 
 #### Test
