@@ -10,19 +10,26 @@ Notion 편집을 자동화하세요. 에디터 도구를 이용해 여러분만�
 
 ### Setup Runtime
 
-#### Default
-
 ```sh
+# MacOS
+brew install hatch
+
+# Ubuntu
 sudo apt install pipx
 pipx ensurepath
 pipx install hatch
+
+# ---
 hatch env create
 ```
 
 #### Run
 
 ```sh
+# Interactive
 hatch shell
+
+# One-time
 hatch run python -m app.routine.main
 ```
 
