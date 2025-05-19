@@ -64,16 +64,16 @@ test = [
 ]
 
 "apply.ruff" = [
-    "ruff format notion_df test app",
-    "ruff check --fix notion_df test app",
+    "ruff format notion_df tests app",
+    "ruff check --fix notion_df tests app",
 ]
 
-"apply.cloc" = "cloc notion_df test app"
+"apply.cloc" = "cloc notion_df tests app"
 
 "test.vulture" = "vulture"
 "test.ruff" = [
-    "ruff format --check notion_df test app",
-    "ruff check notion_df test app",
+    "ruff format --check notion_df tests app",
+    "ruff check notion_df tests app",
 ]
 "test.pylint" = "pylint notion_df/"
 "test.mypy" = "mypy notion_df/"
