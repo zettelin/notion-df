@@ -1,3 +1,7 @@
+.idea/*
+!.idea/modules.xml
+!.idea/inspectionProfiles/
+
 /venv
 /out
 
@@ -6,6 +10,3 @@
 
 __pycache__
 .pytest_cache
-
-/.idea/*
-!/.idea/inspectionProfiles/
