@@ -2,22 +2,15 @@
 name = "notion_df"
 version = "0.2.0"
 description = "Notion-df: schema-rich Notion API wrapper"
-authors = [{ name = "dyhn78", email = "dyhn78@gmail.com" }]
+authors = [{ name = "zettelin", email = "zettelin@gmail.com" }]
 requires-python = ">=3.12"
 
 dependencies = [
-    "networkx==3.1",
-    "beautifulsoup4==4.12.2",
     "python-dateutil==2.8.2",
-    "requests<=2.31.0", # 2.32.0 will require urllib3=2
-    "html5lib==1.1",
-    "urllib3<2", # urllib3~=2 breaks in legacy websites
-    "selenium==4.9.1",
+    "requests",
     "tenacity==8.2.2",
     "types-requests~=2.31.0",
     "typing_extensions==4.10.0",
-    "webdriver-manager==4.0.2",
-    "psutil==5.9.6",
     "loguru==0.7.2"
 ]
 
@@ -39,6 +32,7 @@ extend-exclude = [
 ]
 
 [tool.hatch.envs.default]
+python = "3.12"
 dependencies = [
     "ruff",
     "pytest",
@@ -75,5 +69,4 @@ test = [
 ]
 "test.pylint" = "pylint notion_df/"
 "test.mypy" = "mypy notion_df/"
-"test.unit" = "pytest tests/"
-
+"test.unit" = "pytest test/"

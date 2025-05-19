@@ -1,11 +1,4 @@
-.idea/*
-!.idea/modules.xml
-
+# general
 /venv
-/out
-
-*.ppk
-*.pem
-
 __pycache__
 .pytest_cache
