@@ -141,17 +141,17 @@ class MigrationBackupLoadAction(SequentialAction):
                 this_page.parent == DatabaseEnum.event_db.entity
                 and this_new_prop.name
                 in [
-                    DatabaseEnum.datei_db.prefix_title,
-                    DatabaseEnum.weeki_db.prefix_title,
+                    DatabaseEnum.dateid_db.prefix_title,
+                    DatabaseEnum.weekid_db.prefix_title,
                 ]
             ):
                 timei_list = this_new_properties[this_new_prop]
                 if not timei_list:
                     raise RuntimeError(f"{this_page=}, {this_new_prop=}")
                 match timei_list[0].parent:
-                    case DatabaseEnum.datei_db.entity:
+                    case DatabaseEnum.dateid_db.entity:
                         earliest_timei = Datei.get_earliest(timei_list)
-                    case DatabaseEnum.weeki_db.entity:
+                    case DatabaseEnum.weekid_db.entity:
                         earliest_timei = Weeki.get_earliest(timei_list)
                     case _:
                         raise RuntimeError(
@@ -250,18 +250,18 @@ class MigrationBackupLoadAction(SequentialAction):
             )
 
         # customized cases
-        if linked_db_enum == DatabaseEnum.datei_db:
-            prefix = DatabaseEnum.datei_db.prefix
-            prefix_title = DatabaseEnum.datei_db.prefix_title
+        if linked_db_enum == DatabaseEnum.dateid_db:
+            prefix = DatabaseEnum.dateid_db.prefix
+            prefix_title = DatabaseEnum.dateid_db.prefix_title
             if this_prev_prop.name in [
                 prefix_title,
                 f"{prefix}{schedule}",
                 f"{prefix}{start}",
             ]:
                 return pick(this_prev_prop.name) or pick(prefix_title)
-        if linked_db_enum == DatabaseEnum.weeki_db:
-            prefix = DatabaseEnum.weeki_db.prefix
-            prefix_title = DatabaseEnum.datei_db.prefix_title
+        if linked_db_enum == DatabaseEnum.weekid_db:
+            prefix = DatabaseEnum.weekid_db.prefix
+            prefix_title = DatabaseEnum.dateid_db.prefix_title
             if this_prev_prop.name in [
                 prefix_title,
                 f"{prefix}{schedule}",
@@ -275,16 +275,16 @@ class MigrationBackupLoadAction(SequentialAction):
                 ):
                     return prop_name
         if (
-            this_db_enum == DatabaseEnum.channel_db
-            and linked_db_enum == DatabaseEnum.channel_db
+            this_db_enum == DatabaseEnum.tide_db
+            and linked_db_enum == DatabaseEnum.tide_db
         ):
-            if this_prev_db_enum == DatabaseEnum.domain_db:
+            if this_prev_db_enum == DatabaseEnum.extent_db:
                 return pick(lower)
         if (
-            this_db_enum == DatabaseEnum.domain_db
-            and linked_db_enum == DatabaseEnum.domain_db
+            this_db_enum == DatabaseEnum.extent_db
+            and linked_db_enum == DatabaseEnum.extent_db
         ):
-            if this_prev_db_enum == DatabaseEnum.scrap_db:
+            if this_prev_db_enum == DatabaseEnum.tap_db:
                 return pick(lower)
             return pick(upper)
 

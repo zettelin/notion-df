@@ -10,6 +10,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from app import out_dir
 from app.service.webdriver_service import WebDriverService
 from notion_df.core.collection import StrEnum
 
@@ -96,9 +97,8 @@ l.parentNode.removeChild(l);
         self.driver_wait.until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, GYLibraryCSSTag.input_box))
         )
-        from pathlib import Path
 
-        Path("/home/ubuntu/page_source.html").write_text(self.driver.page_source)
+        (out_dir / "page_source.html").write_text(self.driver.page_source)
         self.send_keys(GYLibraryCSSTag.input_box, self.title)
 
         match self.lib_key:

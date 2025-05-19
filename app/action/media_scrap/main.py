@@ -65,7 +65,7 @@ class EditStatusValue(StrEnum):
 
 class MediaScrapAction(IndividualAction):
     def __init__(self, *, create_window: bool):
-        self.reading_db = DatabaseEnum.reading_db.entity
+        self.reading_db = DatabaseEnum.read_db.entity
         self.driver_service = WebDriverService(create_window=create_window)
 
     def query(self) -> Paginator[Page]:

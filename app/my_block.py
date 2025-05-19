@@ -34,16 +34,16 @@ _entity_to_enum = {}
 class DatabaseEnum(Enum):
     journal_db = ("바탕", "2c5411ba6a0f43a0a8aa06295751e37a", EmojiCode.BLUE_CIRCLE)
     event_db = ("일과", "c8d46c01d6c941a9bf8df5d115a05f03", EmojiCode.BLUE_HEART)
-    domain_db = ("외연", "eb2f09a1de41412e8b2357bc04f26e74", EmojiCode.RED_CIRCLE)
-    stage_db = ("내연", "fa7d93f6fbd341f089b185745c834811", EmojiCode.RED_HEART)
-    doing_db = ("활동", "addc94642ee74825bd31109f4fd1c9ee", EmojiCode.YELLOW_CIRCLE)
-    reading_db = ("읽기", "c326f77425a0446a8aa309478767c85b", EmojiCode.YELLOW_HEART)
-    channel_db = ("채널", "e8782fe4e1a34c9d846d57b01a370327", EmojiCode.GREEN_CIRCLE)
-    scrap_db = ("수집", "52d387ea0aaa470cb69332708c61b34d", EmojiCode.GREEN_HEART)
-    datei_db = ("일간", "961d1ca0a3d24a46b838ba85e710f18d", EmojiCode.PURPLE_CIRCLE)
-    weeki_db = ("주간", "d020b399cf5947a59d11a0b9e0ea45d0", EmojiCode.PURPLE_HEART)
+    extent_db = ("외연", "eb2f09a1de41412e8b2357bc04f26e74", EmojiCode.RED_CIRCLE)
+    intent_db = ("내포", "fa7d93f6fbd341f089b185745c834811", EmojiCode.RED_HEART)
+    stage_db = ("실천", "addc94642ee74825bd31109f4fd1c9ee", EmojiCode.YELLOW_CIRCLE)
+    read_db = ("읽기", "c326f77425a0446a8aa309478767c85b", EmojiCode.YELLOW_HEART)
+    tide_db = ("줄기", "e8782fe4e1a34c9d846d57b01a370327", EmojiCode.GREEN_CIRCLE)
+    tap_db = ("수집", "52d387ea0aaa470cb69332708c61b34d", EmojiCode.GREEN_HEART)  # TODO scrap
+    dateid_db = ("일간", "961d1ca0a3d24a46b838ba85e710f18d", EmojiCode.PURPLE_CIRCLE)
+    weekid_db = ("주간", "d020b399cf5947a59d11a0b9e0ea45d0", EmojiCode.PURPLE_HEART)
     genai_db = (
-        ">GenAI",
+        "GenAI",
         "16a93035080d4b93b9e4b3db1b52811d",
         "",
         Page("383cfe576d684df3823cb1535bebfaf0"),
@@ -101,26 +101,26 @@ start = "시작"
 relevant = "연관"
 upper = "상위"
 lower = "하위"
-record_to_sch_datei_prop = RelationProperty(DatabaseEnum.datei_db.prefix + schedule)
+record_to_sch_datei_prop = RelationProperty(DatabaseEnum.dateid_db.prefix + schedule)
 record_datetime_auto_prop = DateFormulaPropertyKey(EmojiCode.TIMER + "일시")
 record_timestr_prop = RichTextProperty(EmojiCode.CALENDAR + "일지")
 record_kind_prop = SelectProperty("📕유형")
 record_contents_merged_prop = CheckboxFormulaProperty("🛠병합됨")
-datei_to_weeki_prop = RelationProperty(DatabaseEnum.weeki_db.prefix_title)
+datei_to_weeki_prop = RelationProperty(DatabaseEnum.weekid_db.prefix_title)
 datei_date_prop = DateProperty(EmojiCode.CALENDAR + "날짜")
 weeki_date_range_prop = DateProperty(EmojiCode.BIG_CALENDAR + "날짜 범위")
 event_title_prop = TitleProperty(EmojiCode.ORANGE_BOOK + "제목")
-record_to_datei_prop = RelationProperty(DatabaseEnum.datei_db.prefix_title)
+record_to_datei_prop = RelationProperty(DatabaseEnum.dateid_db.prefix_title)
 record_to_journal_prop = RelationProperty(DatabaseEnum.journal_db.prefix_title)
-record_to_point_prop = RelationProperty(DatabaseEnum.domain_db.prefix_title)
+record_to_extent_prop = RelationProperty(DatabaseEnum.extent_db.prefix_title)
+record_to_intent_prop = RelationProperty(DatabaseEnum.intent_db.prefix_title)
 record_to_stage_prop = RelationProperty(DatabaseEnum.stage_db.prefix_title)
-record_to_doing_prop = RelationProperty(DatabaseEnum.doing_db.prefix_title)
-record_to_reading_prop = RelationProperty(DatabaseEnum.reading_db.prefix_title)
-record_to_channel_prop = RelationProperty(DatabaseEnum.channel_db.prefix_title)
-record_to_scrap_prop = RelationProperty(DatabaseEnum.scrap_db.prefix_title)
-thread_needs_sch_datei_prop = CheckboxFormulaProperty("🛠일정")
-reading_to_date_prop = RelationProperty(DatabaseEnum.datei_db.prefix_title)
-reading_to_start_date_prop = RelationProperty(DatabaseEnum.datei_db.prefix + start)
+record_to_read_prop = RelationProperty(DatabaseEnum.read_db.prefix_title)
+record_to_tide_prop = RelationProperty(DatabaseEnum.tide_db.prefix_title)
+record_to_tap_prop = RelationProperty(DatabaseEnum.tap_db.prefix_title)
+work_needs_sch_datei_prop = CheckboxFormulaProperty("🛠일정")
+reading_to_date_prop = RelationProperty(DatabaseEnum.dateid_db.prefix_title)
+reading_to_start_date_prop = RelationProperty(DatabaseEnum.dateid_db.prefix + start)
 reading_to_event_prop = RelationProperty(DatabaseEnum.event_db.prefix_title)
 reading_match_date_by_created_time_prop = CheckboxFormulaProperty(
     EmojiCode.BLACK_NOTEBOOK + "시작일<-생성시간"
@@ -148,7 +148,7 @@ class TitleIndexedPage(Page, metaclass=ABCMeta):
 
 
 class Datei(TitleIndexedPage):
-    db = DatabaseEnum.datei_db.entity
+    db = DatabaseEnum.dateid_db.entity
     title_prop = TitleProperty(EmojiCode.GREEN_BOOK + "제목")
     date_prop = DateProperty(EmojiCode.CALENDAR + "날짜")
     page_by_date_dict: ClassVar[dict[dt.date, Self]] = {}
@@ -196,7 +196,7 @@ class Datei(TitleIndexedPage):
     @classmethod
     def get_earliest(cls, datei_it: Iterable[Page]) -> Page:
         def _get_start_date(datei: Page) -> dt.date | None:
-            assert datei.parent == DatabaseEnum.datei_db.entity
+            assert datei.parent == DatabaseEnum.dateid_db.entity
             return datei.properties[datei_date_prop].start
 
         return min(
@@ -205,7 +205,7 @@ class Datei(TitleIndexedPage):
 
 
 class Weeki(TitleIndexedPage):
-    db = DatabaseEnum.weeki_db.entity
+    db = DatabaseEnum.weekid_db.entity
     title_prop = TitleProperty(EmojiCode.GREEN_BOOK + "제목")
     date_range_prop = DateProperty(EmojiCode.BIG_CALENDAR + "날짜 범위")
 
@@ -249,7 +249,7 @@ class Weeki(TitleIndexedPage):
     @classmethod
     def get_earliest(cls, weeki_it: Iterable[Page]) -> Page:
         def _get_start_date(weeki: Page) -> dt.date | None:
-            assert weeki.parent == DatabaseEnum.weeki_db.entity
+            assert weeki.parent == DatabaseEnum.weekid_db.entity
             return weeki.properties[weeki_date_range_prop].start
 
         return min(
